@@ -1,6 +1,6 @@
 # Twitch App
 A Learning Vuejs Project
 
-## npm install
-
-## npm run dev
+### Run Project
+- `npm install`
+- `npm run dev`
