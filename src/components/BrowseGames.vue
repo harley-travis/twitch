@@ -31,9 +31,12 @@
       <div class="gameWrapper">
         <div v-for="game in games" class="game-card">
           <div class="game-img-wrapper">
-            <router-link :to="{ name: 'BrowseStreamers', params: {id: game.name} }"><img :src="game.box_art_url | imgsize" class="game-img"></router-link>
+            <router-link :to="{ name: 'BrowseStreamers', params: {id: game.game.name} }">
+              <img :src="game.game.box.large | imgsize" class="game-img"><br>
+              <span class="title">{{game.game.name}}</span><br>
+            </router-link>
+              <span class="title">{{game.viewers}} Viewers</span><br>
           </div>
-          <a href=""><span class="title">{{game.name}}</span></a>
         </div>
       </div>
     </div>
@@ -70,11 +73,11 @@ export default {
   methods: {
     getTopGames(){
       axios.defaults.headers.common['Client-ID'] = 'xd5ui0gqy6f2n0tgah5jhjtmegqxr6';
-      axios.get('https://api.twitch.tv/helix/games/top')
+      axios.get('https://api.twitch.tv/kraken/games/top')
       .then((response) => {
 
-        this.games = response.data.data;
-
+        this.games = response.data.top;
+        console.log(this.games)
         if(this.warning = true) {
           this.warning = false;
         }
@@ -108,7 +111,7 @@ h1 {
 }
   .game-img {
     width: 100%;
-    max-width: 300px;
-    height: 400px;
+    max-width: 165px;
+    height: 220px;
 }
 </style>

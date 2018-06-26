@@ -62,7 +62,7 @@ export default {
     getLiveStream(game){
       game = this.$route.params.id;
       axios.defaults.headers.common['Client-ID'] = 'xd5ui0gqy6f2n0tgah5jhjtmegqxr6';
-      axios.get('https://api.twitch.tv/kraken/streams/?game='+game+'&language=en&limit=7')
+      axios.get('https://api.twitch.tv/kraken/streams/?game='+game+'&language=en&limit=7&viewers=0')
       .then((response) => {
         this.live = response.data.streams;
       }).catch((error) => { console.log(error); });
