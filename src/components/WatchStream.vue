@@ -64,8 +64,8 @@ export default {
   methods: {
     getStreams(gameID) {
       gameID = '33214'
-      axios.defaults.headers.common['Client-ID'] = 'xd5ui0gqy6f2n0tgah5jhjtmegqxr6';
-      axios.get('https://api.twitch.tv/helix/streams?game_id='+gameID+'&type=live&first=6&viewer_count=1&language=en')
+      axios.defaults.headers.common['Client-ID'] = process.env.CLIENT_ID;
+      axios.get(process.env.TWITCH_API+'helix/streams?game_id='+gameID+'&type=live&first=6&viewer_count=1&language=en')
       .then((response) => {
         //console.log(response.data.data)
         this.streams = response.data.data;
@@ -73,8 +73,8 @@ export default {
     },
     getLiveStream(){
 
-      axios.defaults.headers.common['Client-ID'] = 'xd5ui0gqy6f2n0tgah5jhjtmegqxr6';
-      axios.get('https://api.twitch.tv/kraken/streams/?game=Overwatch')
+      axios.defaults.headers.common['Client-ID'] = process.env.CLIENT_ID;
+      axios.get(process.env.TWITCH_API+'kraken/streams/?game=Overwatch')
       .then((response) => {
         console.log(response.data.streams)
         this.live = response.data.streams;

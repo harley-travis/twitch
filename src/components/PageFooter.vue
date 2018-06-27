@@ -1,7 +1,7 @@
 <template>
     <div class="footer container-fluid">
         <div class="container">
-            footer
+            &copy; 2018 Streamers.com | All Rights Reserved. 
         </div>
     </div>
 </template>
@@ -17,6 +17,6 @@
     padding: 15px;
     border-top: solid 1px #eee;
     margin-top: 35px;
-    text-align: left;
+    text-align: right;
 }
 </style>

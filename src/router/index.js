@@ -13,11 +13,6 @@ export default new Router({
       component: BrowseGames
     },
     {
-      path: '/browseGames',
-      name: 'BrowseGames',
-      component: BrowseGames
-    },
-    {
       path: '/browseStreamers/:id',
       name: 'BrowseStreamers',
       component: BrowseStreamers
