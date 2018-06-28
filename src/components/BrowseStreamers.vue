@@ -13,18 +13,34 @@
           <span class="title">{{live.viewers | formatNumber}} Views</span><br>
         </div>
 
-        <ul class="list-group list-group-flush">
-          <li v-for="streaming in live" class="list-group-item">
-            <div class="left col-sm">
+        <ul class="streamers">
+          <li v-for="streaming in live.slice().reverse()" class="row streamer-list">
+
+            <div class="streamer-wrapper">
+              <div class="game-img-wrapper">
+                <a :href="streaming.channel.url" target="_blank"><img :src="streaming.preview.large" class="game-img"></a>
+              </div>
+              <div class="row streamer-info">
+                <div class="left col-sm">
+                  <a :href="streaming.channel.url" target="_blank"><img :src="streaming.channel.logo" class="streamer-img"></a>
+                </div>
+                <div class="right col-11">
+                  <span class="title">{{streaming.channel.status}}</span>
+                  <span class="title">{{streaming.channel.display_name}}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="left col-sm display-inline">
               <div class="stream-img-wrapper">
                 <a :href="streaming.channel.url" target="_blank"><img :src="streaming.preview.large" class="stream-img"></a>
               </div>
             </div>
-            <div class="right col-sm">
+            <div class="right col-sm display-inline">
               <strong><span class="title">{{streaming.channel.display_name}}</span></strong><br>
               <span class="title">{{streaming.channel.status}}</span><br>
               <span class="title">{{streaming.viewers | formatNumber}} Views</span><br>
-            </div>
+            </div> -->
           </li>
         </ul>
 
@@ -65,9 +81,6 @@ export default {
       let channelName = subdomain.replace(".tv", ".tv/?channel=")
       return channelName
     },
-    reverse: function(value) {
-      return value.slice().reverse();
-    },
     formatNumber: function(value) {
       var numeral = require("numeral");
       return numeral(value).format("0,0");
@@ -98,9 +111,17 @@ li {
   list-style: none;
 }
 img.stream-img {
-    max-width: 400px;
     width: 100%;
-    float: left;
     padding-right: 10px;
+}
+.streamer-list {
+  background-color: #fff;
+  margin: 10px 0;
+  border-bottom: 1px solid #eee;
+  padding: 15px;
+}
+.streamer-img {
+    width: 100%;
+    max-width: 50px;
 }
 </style>

@@ -22,8 +22,23 @@ const appService = {
     },
     getFirstLiveStream(game) {
         return new Promise((resolve) => {
-            axios.get('/kraken/streams/?language=en&game='+game+'&limit=1')
+            axios.get('/kraken/streams/?sort=views&language=en&stream_type=live&game='+game)
             .then((response) => {
+                 // send variables to calc the offset
+                 var total = response.data._total;
+                 var query = this.calculateSingleOffset(game, total)
+                 console.log(query, ' query')
+                 resolve(query)
+            })
+        })
+    },
+    calculateSingleOffset(game, total) {
+        let offset = total - 1;
+        return new Promise((resolve) => {
+            axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=1')
+            .then((response) => {
+                console.log(response.data, ' calcualted single')
+                
                 resolve(response.data.streams)
             })
         })

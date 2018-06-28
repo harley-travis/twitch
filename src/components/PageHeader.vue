@@ -1,7 +1,7 @@
 <template>
     <div class="header container-fluid">
         <div class="container">
-            <router-link to="/" class="logo">Header</router-link>
+            <router-link to="/" class="logo">Streamers</router-link>
         </div>
     </div>
 </template>
