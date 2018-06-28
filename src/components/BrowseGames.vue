@@ -1,15 +1,15 @@
 <template>
-  <div class="browseGames container">
+  <div class="browseGames heading-title container">
 
     <!-- UX messages -->
-    <div class="alert">
+    <!-- <div class="alert">
       <div v-show="warning" class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Error!</strong> Either this game is not currently being streamed, or the game does not exist. Whomp Whomp.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-    </div>
+    </div> -->
 
     <div class="row">
       <div class="left col-sm">
@@ -18,17 +18,17 @@
       <div class="right col-sm">
 
         <!-- search query -->
-        <form class="form-inline">
+        <!-- <form class="form-inline">
           <div class="form-group mx-sm-3 mb-2">
             <input type="text" v-model="search" @keyup.enter="searchGame(search)" class="form-control" placeholder="Search Game">
           </div>
           <button v-on:click="searchGame(search)" class="btn btn-primary mb-2">Search</button>
-        </form>
+        </form> -->
       </div>
     </div>
     
     <!-- display search results -->
-    <div class="search">
+    <!-- <div class="search">
       <div class="searchWrapper">
         <div v-for="search in searches" class="game-card">
           <div class="game-img-wrapper">
@@ -39,10 +39,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- display top games -->
-    <div class="game">
+    <div class="row">
       <div class="gameWrapper">
         <div v-for="game in games" class="game-card">
           <div class="game-img-wrapper">
@@ -113,11 +113,15 @@ export default {
 </script>
 
 <style>
+.heading-title {
+  margin-top: 25px;
+}
 h1 {
   text-align: left;
+  padding-bottom: 25px;
 }
 .game-img-wrapper {
-  width: 165px;
+  width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

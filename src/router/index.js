@@ -13,10 +13,12 @@ export default new Router({
       component: BrowseGames
     },
     {
-      path: '/browseStreamers/:id',
+      path: '/:id',
       name: 'BrowseStreamers',
-      component: BrowseStreamers
+      component: BrowseStreamers,
+      meta: {
+        title: ':id'
+      }
     }
   ]
 })
-
