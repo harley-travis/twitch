@@ -34,29 +34,21 @@ const appService = {
             .then((response) => {
                 // send variables to calc the offset
                 var total = response.data._total;
-                this.calculateOffset(game, total)
-
-                resolve(response.data.streams)
+                var query = this.calculateOffset(game, total)
+                console.log(query, ' query')
+                resolve(query)
             })
         })
     },
     calculateOffset(game, total) {
-        //https://discuss.dev.twitch.tv/t/sort-stream-by-view-count/16359/3
-        
         let offset = total - 5;
-        let amount = total - offset;
-
-        console.log(total, ' total')   // 9437
-        console.log(offset, ' offset') // 9432
-        console.log(amount, ' amount') // 5
-
-        axios.get('/kraken/streams?sort=views&game='+game+'offset='+offset)
-        .then((response) => {
-            console.log(response.data, ' calcualted offset')
-            return response.data.streams
+        return new Promise((resolve) => {
+            axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=5')
+            .then((response) => {
+                console.log(response.data, ' calcualted offset')
+                resolve(response.data.streams)
+            })
         })
-        
-
     }
 }
 
