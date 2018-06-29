@@ -15,7 +15,7 @@
                                         <span class="input-group-text"><font-awesome-icon icon="search" /></span>
                                     </div>
                                 </div>
-                                <div class="search-results" v-if="options.length">
+                                <div class="search-results" v-if="options.length > 0">
                                     <ul class="list-group">
                                         <li class="list-group-item list-group-item-action" v-for="game in options.slice(0,3)">
                                             <router-link :to="{ name: 'BrowseStreamers', params: {id: game.name} }">
@@ -38,12 +38,15 @@ import appService from '../service.js'
 import axios from 'axios'
 
 export default {
-    name: 'BrowseGames',
+    name: 'PageHeader',
     data: function() {
         return {
             search: '',
-            options: [],
+            options: []
         }   
+    },
+    created() {
+        this.resetData()
     },
     methods: {
         searchGame() {
@@ -57,6 +60,14 @@ export default {
                     this.options.push(game);
                 })
             })
+        },
+        resetData() {
+            this.search = '';
+            this.options = [];
+
+            console.log(this.search)
+            console.log(this.options)
+            
         }
     }
 }
