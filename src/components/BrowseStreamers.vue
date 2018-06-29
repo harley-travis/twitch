@@ -27,7 +27,7 @@
                 <div class="col-sm-3">
                   <a :href="streaming.channel.url" target="_blank"><img :src="streaming.channel.logo" class="streamer-img"></a>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-9 channel-details">
                   <span class="title">{{streaming.channel.status}}</span><br>
                   <a :href="streaming.channel.url" target="_blank"><span class="title">{{streaming.channel.display_name}}</span></a><br>
                   <span class="title">{{streaming.viewers | formatNumber}} Views</span>
@@ -36,9 +36,7 @@
             </div>
           </div>
         </div>
-        
       </div>
-   
   </div>
 </template>
 
@@ -50,14 +48,32 @@ export default {
   name: 'BrowseStreamers',
   data: function() {
     return {
-      streams: [],
-      live: []
+      id: this.$route.params.id,
+      streams: {
+        streams: []
+      },
+      live: {
+        live: []
+      },
+      gameData: {
+        gameData: []
+      }
     }
-    
   },
   created() {
+    this.getGameData()
     this.getFirstLiveStream()
     this.getLiveStreams()
+  },
+  watch: {
+    // in order to use the same componenet with different data points
+    // we need to create a watch to see if there is a change in the code
+    // the id is referenced in the data()
+    '$route' (to, from) {
+      this.id = to.params.id
+      this.getFirstLiveStream()
+      this.getLiveStreams()
+    }
   },
   filters: {
     imgsize: function(value) {
@@ -80,6 +96,12 @@ export default {
     }
   },
   methods: {
+    getGameData(game) {
+      game = this.$route.params.id;
+      appService.getGameData(game).then(data => {
+        this.gameData = data
+      });
+    },
     getLiveStreams(game){
       game = this.$route.params.id;
       appService.getLiveStreams(game).then(data => {
@@ -100,6 +122,7 @@ export default {
 h1 {
   text-align: left;
   padding-bottom: 25px;
+  color: #643097;
 }
 .heading-title {
   margin-top: 25px;
@@ -124,5 +147,13 @@ img.stream-img {
 }
 .preview-img {
   width: 100%;
+}
+.hidden {
+  display: none;
+}
+.channel-details {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

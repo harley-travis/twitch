@@ -119,6 +119,7 @@ export default {
 h1 {
   text-align: left;
   padding-bottom: 25px;
+  color: #643097;
 }
 .game-img-wrapper {
   width: 200px;

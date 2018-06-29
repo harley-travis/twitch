@@ -12,6 +12,14 @@ const appService = {
             })
         })
     },
+    getGameData(game) {
+        return new Promise((resolve) => {
+            axios.get('/kraken/search/games?query='+game+'&type=suggest')
+            .then((response) => {
+                resolve(response.data.games)  
+            })
+        })
+    },
     searchGame(params) {
         return new Promise((resolve) => {
             axios.get('/kraken/search/games?query='+params+'&type=suggest&live=true')
@@ -31,7 +39,7 @@ const appService = {
             })
         })
     },
-    calculateSingleOffset(game, total) {
+    calculateSingleOffset(game, total) { 
         let offset = total - 1;
         return new Promise((resolve) => {
             axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=1')
@@ -59,7 +67,6 @@ const appService = {
             })
         })
     }
-    
 }
 
 export default appService
