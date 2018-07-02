@@ -6,7 +6,7 @@
                     Built by <a href="https://www.twitch.tv/lordbigoftasty" target="_blank">LordBigofTasty</a>
                 </div>
                 <div class="col-sm">
-                    &copy; 2018 Streamers.com | All Rights Reserved. 
+                    &copy; {{this.year}} Streamers.com | All Rights Reserved. 
                 </div>
             </div>
         </div>
@@ -15,7 +15,23 @@
 
 <script>
     export default {
-        
+        name: 'BrowseStreamers',
+        data: function() {
+            return {
+                year: ''
+            }
+        },
+        created() {
+            this.getYear()
+        },
+        methods: {
+            getYear() {
+                var d = new Date();
+                var n = d.getFullYear();
+                this.year = n;
+                return n;
+            }
+        }
     }
 </script>
 

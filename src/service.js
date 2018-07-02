@@ -41,7 +41,6 @@ const appService = {
     },
     calculateSingleOffset(game, total) { 
         let offset = total - 1;
-        console.log(offset, ' the offset')
         return new Promise((resolve) => {
             axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=1')
             .then((response) => {              

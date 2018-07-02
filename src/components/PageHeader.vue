@@ -18,7 +18,7 @@
                                 <div class="search-results" v-if="options.length > 0">
                                     <ul class="list-group">
                                         <li class="list-group-item list-group-item-action" v-for="game in options.slice(0,3)">
-                                            <router-link :to="{ name: 'BrowseStreamers', params: {id: game.name} }">
+                                            <router-link @click.native="clearSearch()" :to="{ name: 'BrowseStreamers', params: {id: game.name} }">
                                                 <span class="search-game-title">{{game.name}}</span><img :src="game.box.small" class="search-game-img">
                                             </router-link>
                                         </li>
@@ -61,13 +61,9 @@ export default {
                 })
             })
         },
-        resetData() {
+        clearSearch() {
             this.search = '';
             this.options = [];
-
-            console.log(this.search)
-            console.log(this.options)
-            
         }
     }
 }
