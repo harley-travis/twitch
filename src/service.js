@@ -30,7 +30,7 @@ const appService = {
     },
     getFirstLiveStream(game) {
         return new Promise((resolve) => {
-            axios.get('/kraken/streams/?sort=views&language=en&stream_type=live&game='+game)
+            axios.get('/kraken/streams/?sort=views&stream_type=live&game='+game)
             .then((response) => {
                  // send variables to calc the offset
                  var total = response.data._total;
@@ -41,9 +41,10 @@ const appService = {
     },
     calculateSingleOffset(game, total) { 
         let offset = total - 1;
+        console.log(offset, ' the offset')
         return new Promise((resolve) => {
             axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=1')
-            .then((response) => {                
+            .then((response) => {              
                 resolve(response.data.streams)
             })
         })
@@ -59,9 +60,9 @@ const appService = {
         })
     },
     calculateOffset(game, total) {
-        let offset = total - 6;
+        let offset = total - 7;
         return new Promise((resolve) => {
-            axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=6')
+            axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=7')
             .then((response) => {
                 resolve(response.data.streams)
             })

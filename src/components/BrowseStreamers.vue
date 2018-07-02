@@ -7,7 +7,7 @@
 
       <div class="streamWrapper">
         <div class="row">
-          <div v-for="live in streams.slice().reverse()" class="col-12 stream-card">
+          <div v-for="live in streams" class="col-12 stream-card">
             <div class="video-wrapper">
               <iframe :src="live.channel.url | liveURL" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
             </div>
@@ -49,15 +49,10 @@ export default {
   data: function() {
     return {
       id: this.$route.params.id,
-      streams: {
-        streams: []
-      },
-      live: {
-        live: []
-      },
-      gameData: {
-        gameData: []
-      }
+      streams: [],
+      live: [],
+      gameData: []
+      
     }
   },
   created() {
@@ -136,6 +131,9 @@ img.stream-img {
 }
 .streamer-list {
   margin-top: 25px;
+}
+.streamer-list:first-child {
+    display: none;
 }
 .streamer-img {
   width: 100%;
