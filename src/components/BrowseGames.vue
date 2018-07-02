@@ -12,34 +12,13 @@
     </div> -->
 
     <div class="row">
-      <div class="left col-sm">
-        <h1>Browse Top Games</h1>
-      </div>
-      <div class="right col-sm">
-
-        <!-- search query -->
-        <!-- <form class="form-inline">
-          <div class="form-group mx-sm-3 mb-2">
-            <input type="text" v-model="search" @keyup.enter="searchGame(search)" class="form-control" placeholder="Search Game">
-          </div>
-          <button v-on:click="searchGame(search)" class="btn btn-primary mb-2">Search</button>
-        </form> -->
-      </div>
+      <h1>Browse Top Games</h1>
+      <!-- <div class="page-info">
+        <p>
+          Help find the next generation of steamers by finding the streamers with the lowest amount of views. Browse by your favorite game, find cool streamers and follow them! 
+        </p>
+      </div> -->
     </div>
-    
-    <!-- display search results -->
-    <!-- <div class="search">
-      <div class="searchWrapper">
-        <div v-for="search in searches" class="game-card">
-          <div class="game-img-wrapper">
-            <router-link :to="{ name: 'BrowseStreamers', params: {id: search.name} }">
-              <img :src="search.box.large | imgsize" class="game-img"><br>
-              <span class="title">{{search.name}}</span><br>
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <!-- display top games -->
     <div class="row">
@@ -94,20 +73,7 @@ export default {
       appService.getTopGames().then(data => {
         this.games = data
       });
-    },
-    searchGame(params) {
-      appService.searchGame(params).then(data => {
-
-        let totalResults = data.length;
-
-        if(totalResults = 0 || data == null || data == ''){
-            this.warning = true;
-        } else {
-            this.searches = data;
-        }
-
-      })
-    }    
+    }
   }
 }
 </script>
@@ -120,6 +86,11 @@ h1 {
   text-align: left;
   padding-bottom: 25px;
   color: #643097;
+}
+.page-info {
+  background-color: #fafafa;
+  padding: 15px;
+  border: 1px solid #eee;
 }
 .game-img-wrapper {
   width: 200px;

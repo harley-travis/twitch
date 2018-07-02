@@ -4,25 +4,27 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm">
-                        <router-link to="/" class="logo"><font-awesome-icon icon="spinner" class="logo-icon" /> Streamers</router-link>
+                        <router-link @click.native="clearSearch()" to="/" class="logo"><font-awesome-icon icon="spinner" class="logo-icon" /> Streamers</router-link>
                     </div>
                     <div class="col-sm">
                         <div class="form-wrapper">
                             <form class="form-inline align-right">
                                 <div class="form-group mx-sm-3 mb-2">
-                                    <input type="text" v-model="search" v-on:keyup="searchGame()" class="form-control" placeholder="Search Game">
+                                    <input type="text" v-model="search" @keyup="searchGame()" @keyup.esc="clearSearch()" class="form-control" placeholder="Search Game">
                                     <div class="input-group-append">
                                         <span class="input-group-text"><font-awesome-icon icon="search" /></span>
                                     </div>
                                 </div>
                                 <div class="search-results" v-if="options.length > 0">
-                                    <ul class="list-group">
-                                        <li class="list-group-item list-group-item-action" v-for="game in options.slice(0,3)">
-                                            <router-link @click.native="clearSearch()" :to="{ name: 'BrowseStreamers', params: {id: game.name} }">
-                                                <span class="search-game-title">{{game.name}}</span><img :src="game.box.small" class="search-game-img">
-                                            </router-link>
-                                        </li>
-                                    </ul>
+                                    <div v-if="showInside" v-on-clickaway="away">
+                                        <ul class="list-group">
+                                            <li class="list-group-item list-group-item-action" v-for="game in options.slice(0,5)">
+                                                <router-link @click.native="clearSearch()" :to="{ name: 'BrowseStreamers', params: {id: game.name} }">
+                                                    <span class="search-game-title">{{game.name}}</span><img :src="game.box.small" class="search-game-img">
+                                                </router-link>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>           
                             </form>
                         </div>
@@ -36,20 +38,25 @@
 <script>
 import appService from '../service.js'
 import axios from 'axios'
+// this is a directive you can install 
+// https://github.com/simplesmiler/vue-clickaway 
+import { directive as onClickaway } from 'vue-clickaway' 
 
 export default {
     name: 'PageHeader',
     data: function() {
         return {
             search: '',
-            options: []
+            options: [],
+            showInside: false
         }   
     },
-    created() {
-        this.resetData()
+    directives: {
+        onClickaway: onClickaway,
     },
     methods: {
         searchGame() {
+            this.show()
             this.options = [];
             axios.defaults.baseURL = 'https://api.twitch.tv'
             axios.defaults.headers.common['Client-ID'] = process.env.CLIENT_ID;
@@ -62,8 +69,18 @@ export default {
             })
         },
         clearSearch() {
+            this.hide()
             this.search = '';
             this.options = [];
+        },
+        show() {
+    	    this.showInside = true 
+        },
+        hide() { 
+            this.showInside = false
+        },
+        away: function() {
+            this.hide()
         }
     }
 }
