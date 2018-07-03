@@ -1,16 +1,6 @@
 <template>
   <div class="browseGames heading-title container">
 
-    <!-- UX messages -->
-    <!-- <div class="alert">
-      <div v-show="warning" class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Error!</strong> Either this game is not currently being streamed, or the game does not exist. Whomp Whomp.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </div> -->
-
     <div class="row">
       <h1>Browse Top Games</h1>
       <!-- <div class="page-info">

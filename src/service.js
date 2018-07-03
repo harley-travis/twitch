@@ -1,4 +1,5 @@
 import axios from 'axios'
+import './embedTwitch.min.js'
 
 axios.defaults.baseURL = 'https://api.twitch.tv'
 axios.defaults.headers.common['Client-ID'] = process.env.CLIENT_ID;
@@ -66,6 +67,16 @@ const appService = {
                 resolve(response.data.streams)
             })
         })
+    },
+    getTwitchStream(channel) {
+       return setTimeout(function(){ 
+        new Twitch.Embed("twitch-embed", {
+          width: '100%',
+          height: 480,
+          channel: channel
+        }); 
+      }
+      , 500);
     }
 }
 
