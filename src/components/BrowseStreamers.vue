@@ -8,7 +8,7 @@
       <div class="streamWrapper">
         <div class="row">
           <div v-for="live in streams" class="col-12 stream-card">
-            <div class="video-wrapper">
+            <div class="twitch-vid-wrapper">
               <div id="twitch-embed"></div>
               <!-- <iframe :src="live.channel.url | liveURL" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe> -->
             </div>
@@ -59,7 +59,6 @@ export default {
   created() {
     this.getFirstLiveStream()
     this.getLiveStreams()
-
   },
   watch: {
       // in order to use the same componenet with different data points
@@ -69,10 +68,6 @@ export default {
       this.id = to.params.id
       this.getLiveStreams()
       this.getFirstLiveStream()
-      this.append()
-      this.getTwitchStream()
-
-      
     }
   },
   filters: {
@@ -113,25 +108,12 @@ export default {
       game = this.$route.params.id;
       appService.getFirstLiveStream(game).then(data => {
         this.streams = data
-        //this.append()
-        console.log(this.streams[0].channel.display_name, ' channel')
         let channelName = this.streams[0].channel.display_name
-        this.getTwitchStream(channelName)
+
+        // the Twitch embed function
+        // https://dev.twitch.tv/docs/embed/everything/
+        appService.getTwitchStream(channelName)
       });
-    },
-    append() {
-      var twitchDiv = document.createElement('div');
-      var setAtt = twitchDiv.setAttribute("id", "twitch-embed");
-      document.getElementById("te").appendChild(this.setAtt)
-    },
-    getTwitchStream(channel) {
-      // the Twitch embed function
-      // https://dev.twitch.tv/docs/embed/everything/
-
-      
-      
-
-      appService.getTwitchStream(channel)
     }
   }
 }

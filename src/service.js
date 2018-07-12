@@ -70,12 +70,12 @@ const appService = {
     },
     getTwitchStream(channel) {
        return setTimeout(function(){ 
-        new Twitch.Embed("twitch-embed", {
-          width: '100%',
-          height: 480,
-          channel: channel
-        }); 
-      }
+            new Twitch.Embed('twitch-embed', {
+                width: '100%',
+                height: 480,
+                channel: channel
+            });
+        }
       , 500);
     }
 }

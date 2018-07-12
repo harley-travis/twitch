@@ -13,6 +13,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+ 
 // REGISTER ICON
 library.add(faSpinner)
 library.add(faSearch)
