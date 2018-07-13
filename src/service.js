@@ -33,19 +33,28 @@ const appService = {
         return new Promise((resolve) => {
             axios.get('/kraken/streams/?sort=views&stream_type=live&game='+game)
             .then((response) => {
-                 // send variables to calc the offset
-                 var total = response.data._total;
-                 var query = this.calculateSingleOffset(game, total)
-                 resolve(query)
+                // send variables to calc the offset
+                var total = response.data._total;
+                var query = this.calculateSingleOffset(game, total)
+
+                setTimeout(function(){ 
+                    resolve(query)
+                }
+              , 500);
+
             })
         })
     },
     calculateSingleOffset(game, total) { 
         let offset = total - 1;
+        console.log(offset, ' offset in single offset')
         return new Promise((resolve) => {
             axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=1')
-            .then((response) => {              
-                resolve(response.data.streams)
+            .then((response) => {             
+                setTimeout(function(){ 
+                    resolve(response.data.streams)
+                }
+              , 500);
             })
         })
     },
@@ -55,14 +64,29 @@ const appService = {
             .then((response) => {
                 var total = response.data._total;
                 var query = this.calculateOffset(game, total)
-                resolve(query)
+
+                setTimeout(function(){ 
+                    resolve(query)
+                }
+              , 500);
+
             })
         })
     },
     calculateOffset(game, total) {
-        let offset = total - 7;
+        let offset = ''
+        let limit = ''
+
+        if(total <= 7) {
+            offset = total - 1
+            limit = total
+        } else {
+            offset = total - 7
+            limit = 7
+        }
+
         return new Promise((resolve) => {
-            axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=7')
+            axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit='+limit)
             .then((response) => {
                 resolve(response.data.streams)
             })
@@ -70,13 +94,19 @@ const appService = {
     },
     getTwitchStream(channel) {
        return setTimeout(function(){ 
+
+            // append the twitch-embed code
+            var div = document.createElement("div");
+            div.id = 'twitch-embed'
+            document.getElementById('twitch-embed-wrapper').appendChild(div)
+            
             new Twitch.Embed('twitch-embed', {
                 width: '100%',
                 height: 480,
                 channel: channel
             });
         }
-      , 500);
+      , 700);
     }
 }
 

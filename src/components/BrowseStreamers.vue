@@ -5,12 +5,15 @@
       <h1>{{live.channel.game}}</h1>
     </div>
 
+    <div v-if="loading" class="row">
+      <img :src="img.gif" class="loader">
+    </div>
+
       <div class="streamWrapper">
         <div class="row">
           <div v-for="live in streams" class="col-12 stream-card">
             <div class="twitch-vid-wrapper">
-              <div id="twitch-embed"></div>
-              <!-- <iframe :src="live.channel.url | liveURL" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe> -->
+              <div id="twitch-embed-wrapper"></div>
             </div>
             <span class="title">{{live.channel.status}}</span><br>
             <strong><a :href="live.channel.url" target="_blank"><span class="title">{{live.channel.display_name}}</span></a></strong><br>
@@ -53,11 +56,14 @@ export default {
       id: this.$route.params.id,
       streams: [],
       live: [],
-      gameData: []
+      gameData: [],
+      loading: true,
+      img: {
+        gif: require('../assets/img/loader.gif')
+      }
     }
   },
   created() {
-    this.getFirstLiveStream()
     this.getLiveStreams()
   },
   watch: {
@@ -67,7 +73,6 @@ export default {
       '$route' (to, from) {
       this.id = to.params.id
       this.getLiveStreams()
-      this.getFirstLiveStream()
     }
   },
   filters: {
@@ -99,19 +104,30 @@ export default {
       });
     },
     getLiveStreams(game){
-      game = this.$route.params.id;
+      game = this.id;
+      this.getFirstLiveStream(game)
+
       appService.getLiveStreams(game).then(data => {
         this.live = data
+        console.log(this.live, ' live get live streams')
+        this.loading = false
       });
+
+     
     },
     getFirstLiveStream(game) {
-      game = this.$route.params.id;
+      var channelName = ''
+
       appService.getFirstLiveStream(game).then(data => {
         this.streams = data
-        let channelName = this.streams[0].channel.display_name
+        channelName = this.streams[0].channel.display_name
 
-        // the Twitch embed function
-        // https://dev.twitch.tv/docs/embed/everything/
+        // remove the twitch embed code
+        var embed = document.getElementById('twitch-embed')
+        if(embed) {
+            document.getElementById('twitch-embed').remove()
+        } 
+
         appService.getTwitchStream(channelName)
       });
     }
@@ -131,6 +147,9 @@ h1 {
 img.stream-img {
   width: 100%;
   padding-right: 10px;
+}
+img.loader {
+  margin: 0 auto;
 }
 .streamer-wrapper {
   background-color: #fff;
