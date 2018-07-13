@@ -9,38 +9,38 @@
       <img :src="img.gif" class="loader">
     </div>
 
-      <div class="streamWrapper">
-        <div class="row">
-          <div v-for="live in streams" class="col-12 stream-card">
-            <div class="twitch-vid-wrapper">
-              <div id="twitch-embed-wrapper"></div>
-            </div>
-            <span class="title">{{live.channel.status}}</span><br>
-            <strong><a :href="live.channel.url" target="_blank"><span class="title">{{live.channel.display_name}}</span></a></strong><br>
-            <span class="title">{{live.viewers | formatNumber}} Views</span><br>
+    <div class="streamWrapper">
+      <div class="row">
+        <div v-for="live in streams" class="col-12 stream-card">
+          <div class="twitch-vid-wrapper">
+            <div id="twitch-embed-wrapper"></div>
           </div>
+          <span class="title">{{live.channel.status}}</span><br>
+          <strong><a :href="live.channel.url" target="_blank"><span class="title">{{live.channel.display_name}}</span></a></strong><br>
+          <span class="title">{{live.viewers | formatNumber}} Views</span><br>
         </div>
+      </div>
 
-        <div class="row streamer-list">
-          <div v-for="streaming in live.slice().reverse()" class="col-sm-4 streamer-list">
-            <div class="streamer-wrapper">
-              <div class="preview-wrapper">
-                <a :href="streaming.channel.url" target="_blank"><img :src="streaming.preview.large" class="preview-img"></a>
+      <div class="row streamer-list">
+        <div v-for="streaming in live.slice().reverse()" class="col-sm-4 streamer-list">
+          <div class="streamer-wrapper">
+            <div class="preview-wrapper">
+              <a :href="streaming.channel.url" target="_blank"><img :src="streaming.preview.large" class="preview-img"></a>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <a :href="streaming.channel.url" target="_blank"><img :src="streaming.channel.logo" class="streamer-img"></a>
               </div>
-              <div class="row">
-                <div class="col-sm-3">
-                  <a :href="streaming.channel.url" target="_blank"><img :src="streaming.channel.logo" class="streamer-img"></a>
-                </div>
-                <div class="col-sm-9 channel-details">
-                  <span class="title">{{streaming.channel.status}}</span><br>
-                  <a :href="streaming.channel.url" target="_blank"><span class="title">{{streaming.channel.display_name}}</span></a><br>
-                  <span class="title">{{streaming.viewers | formatNumber}} Views</span>
-                </div>
+              <div class="col-sm-9 channel-details">
+                <span class="title">{{streaming.channel.status}}</span><br>
+                <a :href="streaming.channel.url" target="_blank"><span class="title">{{streaming.channel.display_name}}</span></a><br>
+                <span class="title">{{streaming.viewers | formatNumber}} Views</span>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -56,7 +56,6 @@ export default {
       id: this.$route.params.id,
       streams: [],
       live: [],
-      gameData: [],
       loading: true,
       img: {
         gif: require('../assets/img/loader.gif')
@@ -82,38 +81,20 @@ export default {
       let replace = value.replace("-{width}x{height}", "")
       return replace
     },
-    liveURL: function(value) {
-      // filter to change the channel url to the embed video url
-      if (!value) return ''
-      value = value.toString()
-      let subdomain = value.replace("www", "player")
-      let channelName = subdomain.replace(".tv", ".tv/?channel=")
-      this.getTwitchStream(channelName)
-      return channelName
-    },
     formatNumber: function(value) {
       var numeral = require("numeral");
       return numeral(value).format("0,0");
     }
   },
   methods: {
-    getGameData(game) {
-      game = this.$route.params.id;
-      appService.getGameData(game).then(data => {
-        this.gameData = data
-      });
-    },
     getLiveStreams(game){
       game = this.id;
       this.getFirstLiveStream(game)
 
       appService.getLiveStreams(game).then(data => {
         this.live = data
-        console.log(this.live, ' live get live streams')
         this.loading = false
       });
-
-     
     },
     getFirstLiveStream(game) {
       var channelName = ''

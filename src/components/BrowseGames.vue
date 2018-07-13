@@ -10,7 +10,6 @@
       </div> -->
     </div>
 
-    <!-- display top games -->
     <div class="row">
       <div class="gameWrapper">
         <div v-for="game in games" class="game-card">
@@ -41,7 +40,6 @@ export default {
       warning: false,
       search: ''
     }
-    
   },
   created() {
       this.getGames()

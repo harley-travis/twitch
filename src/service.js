@@ -13,14 +13,6 @@ const appService = {
             })
         })
     },
-    getGameData(game) {
-        return new Promise((resolve) => {
-            axios.get('/kraken/search/games?query='+game+'&type=suggest')
-            .then((response) => {
-                resolve(response.data.games)  
-            })
-        })
-    },
     searchGame(params) {
         return new Promise((resolve) => {
             axios.get('/kraken/search/games?query='+params+'&type=suggest&live=true')
@@ -40,21 +32,20 @@ const appService = {
                 setTimeout(function(){ 
                     resolve(query)
                 }
-              , 500);
+              , 700);
 
             })
         })
     },
     calculateSingleOffset(game, total) { 
         let offset = total - 1;
-        console.log(offset, ' offset in single offset')
         return new Promise((resolve) => {
             axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit=1')
             .then((response) => {             
                 setTimeout(function(){ 
                     resolve(response.data.streams)
                 }
-              , 500);
+              , 700);
             })
         })
     },
@@ -68,7 +59,7 @@ const appService = {
                 setTimeout(function(){ 
                     resolve(query)
                 }
-              , 500);
+              , 700);
 
             })
         })
@@ -88,7 +79,10 @@ const appService = {
         return new Promise((resolve) => {
             axios.get('/kraken/streams?sort=views&game='+game+'&offset='+offset+'&limit='+limit)
             .then((response) => {
-                resolve(response.data.streams)
+                setTimeout(function(){ 
+                    resolve(response.data.streams)
+                }
+              , 700);
             })
         })
     },
