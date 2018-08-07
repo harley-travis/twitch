@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm">
-                        <router-link @click.native="clearSearch()" to="/" class="logo"><font-awesome-icon icon="spinner" class="logo-icon" /> Streamers</router-link>
+                        <router-link @click.native="clearSearch()" to="/" class="logo"><font-awesome-icon icon="spinner" class="logo-icon" /> ZeroStream.Club</router-link>
                     </div>
                     <div class="col-sm">
                         <div class="form-wrapper">

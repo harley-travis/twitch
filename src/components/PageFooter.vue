@@ -6,7 +6,7 @@
                     Built by <a href="https://www.twitch.tv/lordbigoftasty" target="_blank">LordBigofTasty</a>
                 </div>
                 <div class="col-sm">
-                    &copy; {{this.year}} Streamers.com | All Rights Reserved. 
+                    &copy; {{this.year}} ZeroStream.Club | All Rights Reserved. 
                 </div>
             </div>
         </div>
