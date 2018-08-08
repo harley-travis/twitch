@@ -6,7 +6,9 @@
     </div>
 
     <div v-if="loading" class="row">
-      <img :src="img.gif" class="loader">
+      <div class="loader-wrapper">
+        <img :src="img.gif" class="loader">
+      </div>
     </div>
 
     <div class="streamWrapper">
@@ -129,8 +131,13 @@ img.stream-img {
   width: 100%;
   padding-right: 10px;
 }
-img.loader {
+.loader-wrapper {
   margin: 0 auto;
+  padding: 100px;
+}
+img.loader {
+  max-width: 80px;
+  height: 80px;
 }
 .streamer-wrapper {
   background-color: #fff;
