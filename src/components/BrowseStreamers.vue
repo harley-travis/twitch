@@ -1,7 +1,7 @@
 <template>
   <div class="browseStreamers heading-title container">
 
-    <div v-for="live in streams">
+    <div v-for="live in streams" :key="live.id">
       <h1>{{live.channel.game}}</h1>
     </div>
 
@@ -13,7 +13,7 @@
 
     <div class="streamWrapper">
       <div class="row">
-        <div v-for="live in streams" class="col-12 stream-card">
+        <div v-for="live in streams" :key="live.id" class="col-12 stream-card">
           <div class="twitch-vid-wrapper">
             <div id="twitch-embed-wrapper"></div>
           </div>
@@ -24,7 +24,7 @@
       </div>
 
       <div class="row streamer-list">
-        <div v-for="streaming in live.slice().reverse()" class="col-sm-4 streamer-list">
+        <div v-for="streaming in live.slice().reverse()" :key="streaming.id" class="col-sm-4 streamer-list">
           <div class="streamer-wrapper">
             <div class="preview-wrapper">
               <a :href="streaming.channel.url" target="_blank"><img :src="streaming.preview.large" class="preview-img"></a>

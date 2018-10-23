@@ -18,7 +18,7 @@
                                 <div class="search-results" v-if="options.length > 0">
                                     <div v-if="showInside" v-on-clickaway="away">
                                         <ul class="list-group">
-                                            <li class="list-group-item list-group-item-action" v-for="game in options.slice(0,5)">
+                                            <li class="list-group-item list-group-item-action" v-for="game in options.slice(0,5)" :key="game.id">
                                                 <router-link @click.native="clearSearch()" :to="{ name: 'BrowseStreamers', params: {id: game.name} }">
                                                     <span class="search-game-title">{{game.name}}</span><img :src="game.box.small" class="search-game-img">
                                                 </router-link>

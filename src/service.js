@@ -87,21 +87,29 @@ const appService = {
         })
     },
     getTwitchStream(channel) {
-       return setTimeout(function(){ 
+        return setTimeout(function(){ 
 
-            // append the twitch-embed code
-            var div = document.createElement("div");
-            div.id = 'twitch-embed'
-            document.getElementById('twitch-embed-wrapper').appendChild(div)
-            
-            new Twitch.Embed('twitch-embed', {
-                width: '100%',
-                height: 480,
-                channel: channel
-            });
-        }
-      , 700);
-    }
+                // append the twitch-embed code
+                var div = document.createElement("div");
+                div.id = 'twitch-embed'
+                document.getElementById('twitch-embed-wrapper').appendChild(div)
+                
+                new Twitch.Embed('twitch-embed', {
+                    width: '100%',
+                    height: 480,
+                    channel: channel
+                });
+            }
+        , 700);
+    },
+    isTastyLive() {
+        return new Promise((resolve) => {
+            axios.get('/helix/streams/?user_login=hankyphillips')
+            .then((response) => {
+                resolve(response.data.data[0].type)
+            })
+        })
+    },
 }
 
 export default appService

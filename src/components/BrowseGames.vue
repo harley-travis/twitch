@@ -1,6 +1,17 @@
 <template>
   <div class="browseGames heading-title container">
 
+    <div v-if="isTastyLive() === 'live'" class="row">
+      <h2>LordBigOfTasty Is Live!</h2>
+
+        <div class="col-12 lbot">
+          <div class="twitch-vid-wrapper">
+            <div id="twitch-embed-wrapper"></div>
+          </div>
+        </div>
+
+    </div>
+
     <div class="row">
       <h1>Browse Top Games</h1>
       <!-- <div class="page-info">
@@ -12,7 +23,7 @@
 
     <div class="row">
       <div class="gameWrapper">
-        <div v-for="game in games" class="game-card">
+        <div v-for="game in games" class="game-card" :key="game.id">
           <div class="game-img-wrapper">
             <router-link :to="{ name: 'BrowseStreamers', params: {id: game.game.name} }">
               <img :src="game.game.box.large | imgsize" class="game-img"><br>
@@ -30,6 +41,7 @@
 <script>
 
 import appService from '../service.js'
+import '../embedTwitch.min.js'
 
 export default {
   name: 'BrowseGames',
@@ -61,6 +73,14 @@ export default {
       appService.getTopGames().then(data => {
         this.games = data
       });
+    },
+    isTastyLive(){
+      appService.isTastyLive().then(data => {
+        console.log(data, ' here')
+        if(data === 'live'){
+         appService.getTwitchStream('hankyphillips')
+        }
+      })
     }
   }
 }
